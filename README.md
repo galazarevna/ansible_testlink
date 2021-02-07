@@ -75,7 +75,7 @@ In your projects directory create a TestLink directory
   cd TestLink
   ```
 
-Copy the patched [Vagrantfile] to the TestLink directory. Then run: 
+Copy the patched [Vagrantfile](https://github.com/galazarevna/ansible_testlink/blob/master/Vagrantfile) to the TestLink directory. Then run: 
 
   ```sh
   vagrant up
