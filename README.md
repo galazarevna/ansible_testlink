@@ -23,7 +23,11 @@ https://www.vagrantup.com/
 ansible_testlink
 ├── ansible.cfg
 ├── hosts
+├── README.md
 ├── roles
+│   ├── company_settings
+│   │   └── tasks
+│   │       └── main.yml
 │   ├── mysql
 │   │   ├── handlers
 │   │   │   └── main.yml
