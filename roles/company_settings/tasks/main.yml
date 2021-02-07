@@ -1,0 +1,13 @@
+---
+
+- name: Set company name for generated documentation in config.inc.php
+  lineinfile:
+    path: /var/www/testlink/config.inc.php
+    regexp: 'company_name'
+    line: $tlCfg->document_generator->company_name = "{{ company_name }}";
+
+- name: Set company copyright for generated documentation in config.inc.php
+  lineinfile:
+    path: /var/www/testlink/config.inc.php
+    regexp: 'company_copyright'
+    line: $tlCfg->document_generator->company_copyright = "{{ company_copyright }}";

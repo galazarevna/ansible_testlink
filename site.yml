@@ -1,0 +1,14 @@
+---
+
+- name: Update Centos, install MySQL, Nginx, PHP-FPM, and TestLink
+  hosts: all
+  vars_files: vars/main.yml
+  become: yes
+
+  roles:
+    - system
+    - php-fpm
+    - nginx
+    - mysql
+    - testlink
+    - company_settings

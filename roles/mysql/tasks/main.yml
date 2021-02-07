@@ -1,0 +1,53 @@
+---
+
+- name: Install mysql
+  yum:
+    name:
+      - mysql
+      - mysql-server
+    state: present
+
+- name: Install Pip
+  yum:
+    name:
+      - python3-pip
+    state: present
+
+- name: Install the Python MySQLB module
+  pip: 
+    name: PyMySQL
+
+- name: Start mysqld service
+  service: 
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: Set a password for mysql root user
+  mysql_user:
+    name: root
+    password: "{{ mysql_password }}"
+    priv: '*.*:ALL,GRANT'
+    state: present
+  ignore_errors: True
+  notify:
+    - Restart mysql
+
+- name: Remove all anonymous users accounts
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_password }}"
+    name: ''
+    host_all: yes
+    state: absent
+  notify:
+    - Restart mysql
+
+- name: Remove the test database
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_password }}"
+    name: test
+    state: absent
+  notify:
+    - Restart mysql

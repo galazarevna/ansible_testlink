@@ -1,0 +1,77 @@
+---
+
+- rpm_key:
+    state: present
+    key: https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-8
+
+- rpm_key:
+    state: present
+    key: https://rpms.remirepo.net/RPM-GPG-KEY-remi2018
+
+- name: Install EPEL repository on CentOS 8
+  yum:
+    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+    state: present
+
+- name: Install Remi repository
+  yum:
+    name: https://rpms.remirepo.net/enterprise/remi-release-8.rpm
+    state: present
+
+- name: Enable php:remi-7.4 stream
+  command: yum module enable -y php:remi-7.4
+
+- name: Install php, php-fpm, and deps
+  yum:
+    name:
+      - php
+      - php-fpm
+      - php-gd
+      - php-mysqlnd
+      - php-opcache
+      - php-xml
+      - php-common
+      - php-cli
+      - php-devel
+      - php-intl
+      - php-mbstring
+      - php-bcmath
+    state: present
+
+- name: Start php-fpm
+  service:
+    name: php-fpm
+    state: started
+    enabled: yes
+
+- name: Backup default php-fpm configuration
+  shell: /bin/cp /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.bak
+  args:
+    creates: /etc/php-fpm.d/www.conf.bak
+
+- name: Change php-fpm to listen on socket
+  ini_file:
+    path: /etc/php-fpm.d/www.conf
+    section: www
+    option: listen
+    value: /var/run/php-fpm/php-fpm.sock
+  notify:
+  - Restart php-fpm
+
+- name: Change php-fpm user
+  ini_file:
+    path: /etc/php-fpm.d/www.conf
+    section: www
+    option: user
+    value: nginx
+  notify:
+  - Restart php-fpm
+
+- name: Change php-fpm group
+  ini_file:
+    path: /etc/php-fpm.d/www.conf
+    section: www
+    option: group
+    value: nginx
+  notify:
+  - Restart php-fpm
