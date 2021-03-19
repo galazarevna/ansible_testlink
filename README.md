@@ -64,7 +64,7 @@ Install [Vagrant](https://www.vagrantup.com/) and [Virtual Box](https://www.virt
 For Mac users who use a homebrew package manager run:
 
   ```sh
-  brew install virtual box
+  brew install virtualbox
   brew install vagrant
   ```
 
