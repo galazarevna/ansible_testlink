@@ -96,7 +96,7 @@ You might want to open VirtualBox for debugging purposes (if needed).
   cd ansible_testlink
   ```
 
-* Create and activate a [python3 virtual environment](optional)
+* Create and activate a [python3 virtual environment](https://realpython.com/intro-to-pyenv/) (optional)
 
 * Install Ansible on a control node with ```pip``` or a package manager.<br/>
 For Mac users who use a homebrew package manager run:
